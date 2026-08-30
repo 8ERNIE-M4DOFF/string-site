@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Venues — String</title>
+<meta name="description" content="Partner with String. We send confirmed first dates to your tables. Venue partnerships are our entire revenue model — sending you guests is the business.">
+<link rel="icon" type="image/svg+xml" href="string-mark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class='logo' href='index.html'><img src="string-mark.svg" alt=""> string</a>
+    <div class="nav-links">
+      <a href='how-it-works.html'>How It Works</a>
+      <a href='why-string.html'>Why String</a>
+      <a class='active' href='partners.html'>For Venues</a>
+      <a class='btn btn-primary btn-small' href='waitlist.html'>Join the Waitlist</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero-photo" style="--photo: url('https://images.unsplash.com/photo-1771532447024-ee348a315f41?q=80&w=2000&auto=format&fit=crop')">
+  <div class="container">
+    <p class="definition">For Chicago venues</p>
+    <h1>First dates, delivered to <span class="accent">your tables</span>.</h1>
+    <p class="lead">String drives every match toward a confirmed date at a partner venue. Venue partnerships are our entire revenue model — which means sending you guests isn't a side feature, it's the business.</p>
+    <div class="hero-cta">
+      <a href="partners.html#venue-form" class="btn btn-primary">Become a Partner</a>
+    </div>
+    <p class="meta-line">Building our founding Chicago venue list now</p>
+  </div>
+</header>
+
+<section class="band">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Why partner</p>
+      <h2>Our model only works if yours does.</h2>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <h3>Guests with intent</h3>
+        <p>String daters arrive as confirmed pairs with a real commitment to show. Matches expire, so people don't flake — they come in.</p>
+      </div>
+      <div class="card">
+        <h3>Your slow hours</h3>
+        <p>Set the windows you want filled — weeknight evenings, early seatings — and String routes dates to exactly those times.</p>
+      </div>
+      <div class="card">
+        <h3>Repeat business</h3>
+        <p>A great first date becomes "their spot." Couples come back on their own time, and bring friends with them.</p>
+      </div>
+      <div class="card">
+        <h3>Brand presence</h3>
+        <p>Partner venues carry String presence in-house — including matchbooks on the table — placement that lands exactly where your guests already are.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="split tall reverse" style="padding:0;">
+  <div class="split-text">
+    <p class="eyebrow">How it works for you</p>
+    <h2>Simple to join. Built to fill seats.</h2>
+    <ul class="checklist" style="margin-top:8px;">
+      <li><strong>No upfront cost.</strong> Free to join — you offer a small first-round perk, we send the guests.</li>
+      <li><strong>You set the windows.</strong> Choose the days and times you want String dates routed to you.</li>
+      <li><strong>Partner dashboard.</strong> See upcoming bookings and track the dates String brings you each month.</li>
+      <li><strong>You stay in control.</strong> Pause, adjust your windows, or change your perk anytime.</li>
+    </ul>
+  </div>
+  <div class="split-photo" style="background-image:url('https://images.unsplash.com/photo-1613325277138-d89a8f0a081f?q=80&w=2400&auto=format&fit=crop')"></div>
+</section>
+
+<section id="venue-form">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Get started</p>
+      <h2>Become a partner venue</h2>
+      <p>We're assembling our founding Chicago venue list now. Tell us about your spot and we'll be in touch.</p>
+    </div>
+    <form class="form-card" action="partners.html#" method="post" onsubmit="alert('Thanks — we\'ll be in touch soon.'); return false;">
+      <div class="form-group">
+        <label for="venue-name">Venue name</label>
+        <input type="text" id="venue-name" name="venue-name" required>
+      </div>
+      <div class="form-group">
+        <label for="venue-hood">Neighborhood</label>
+        <input type="text" id="venue-hood" name="venue-hood" placeholder="e.g. Logan Square" required>
+      </div>
+      <div class="form-group">
+        <label for="venue-type">Venue type</label>
+        <select id="venue-type" name="venue-type" required>
+          <option value="">Choose one…</option>
+          <option>Restaurant</option>
+          <option>Bar / wine bar</option>
+          <option>Café</option>
+          <option>Activity venue</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="venue-email">Contact email</label>
+        <input type="email" id="venue-email" name="venue-email" required>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;">Request Partnership Info</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="logo"><img src="string-mark.svg" alt=""> string</div>
+      <p class="footer-def">(n.) a thread that ties two things together.</p>
+    </div>
+    <div class="footer-links">
+      <a href='how-it-works.html'>How It Works</a>
+      <a href='why-string.html'>Why String</a>
+      <a href='partners.html'>For Venues</a>
+      <a href='waitlist.html'>Waitlist</a>
+    </div>
+  </div>
+  <div class="copyright">
+    <span>© 2026 String. All rights reserved.</span>
+    <span>Chicago, Illinois</span>
+  </div>
+</footer>
+
+</body>
+</html>

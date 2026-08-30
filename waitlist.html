@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join the Waitlist — String</title>
+<meta name="description" content="Get early access to String. iOS beta launching in Chicago, August 2026.">
+<link rel="icon" type="image/svg+xml" href="string-mark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class='logo' href='index.html'><img src="string-mark.svg" alt=""> string</a>
+    <div class="nav-links">
+      <a href='how-it-works.html'>How It Works</a>
+      <a href='why-string.html'>Why String</a>
+      <a href='partners.html'>For Venues</a>
+      <a class='btn btn-primary btn-small active' href='waitlist.html'>Join the Waitlist</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero center">
+  <div class="container">
+    <p class="definition">string (n.) — a thread that ties two things together.</p>
+    <h1>Join the <span class="accent">waitlist</span></h1>
+    <p class="lead">String launches in Chicago first. Waitlist members get early access to the iOS beta in August 2026.</p>
+  </div>
+</header>
+
+<section style="padding-top:0;">
+  <div class="container">
+    <form class="form-card" action="waitlist.html#" method="post" onsubmit="alert('You\'re on the list. We\'ll reach out before the beta opens.'); return false;">
+      <div class="form-group">
+        <label for="wl-name">First name</label>
+        <input type="text" id="wl-name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="wl-email">Email</label>
+        <input type="email" id="wl-email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="wl-hood">Chicago neighborhood (or city, if elsewhere)</label>
+        <input type="text" id="wl-hood" name="neighborhood" placeholder="e.g. Wicker Park">
+      </div>
+      <div class="form-group">
+        <label for="wl-age">Age range</label>
+        <select id="wl-age" name="age" required>
+          <option value="">Choose one…</option>
+          <option>18–24</option>
+          <option>25–34</option>
+          <option>35–44</option>
+          <option>45+</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;">Save My Spot</button>
+      <p style="font-size:0.8rem;text-align:center;margin-top:14px;color:var(--fog);">One email when the beta opens. Nothing else.</p>
+    </form>
+  </div>
+</section>
+
+<section class="band-slate">
+  <div class="container narrow" style="text-align:center;">
+    <h2 style="color:var(--cream);">iOS beta · Chicago · August 2026</h2>
+    <p style="max-width:520px;margin:18px auto 0;">Matches capped at ten. Expire in fourteen days. Every pair driven toward a confirmed venue. We earn when you walk through the door.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="logo"><img src="string-mark.svg" alt=""> string</div>
+      <p class="footer-def">(n.) a thread that ties two things together.</p>
+    </div>
+    <div class="footer-links">
+      <a href='how-it-works.html'>How It Works</a>
+      <a href='why-string.html'>Why String</a>
+      <a href='partners.html'>For Venues</a>
+      <a href='waitlist.html'>Waitlist</a>
+    </div>
+  </div>
+  <div class="copyright">
+    <span>© 2026 String. All rights reserved.</span>
+    <span>Chicago, Illinois</span>
+  </div>
+</footer>
+
+</body>
+</html>
