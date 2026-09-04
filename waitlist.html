@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Join the Waitlist — String</title>
-<meta name="description" content="Get early access to String. iOS beta launching in Chicago, August 2026.">
+<meta name="description" content="Get early access to String. iOS beta launching in Chicago, October 2026.">
 <link rel="icon" type="image/svg+xml" href="string-mark.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,6 +20,7 @@
       <a href='how-it-works.html'>How It Works</a>
       <a href='why-string.html'>Why String</a>
       <a href='partners.html'>For Venues</a>
+      <a href='safety.html'>Safety</a>
       <a class='btn btn-primary btn-small active' href='waitlist.html'>Join the Waitlist</a>
     </div>
   </div>
@@ -29,13 +30,15 @@
   <div class="container">
     <p class="definition">string (n.) — a thread that ties two things together.</p>
     <h1>Join the <span class="accent">waitlist</span></h1>
-    <p class="lead">String launches in Chicago first. Waitlist members get early access to the iOS beta in August 2026.</p>
+    <p class="lead">String launches in Chicago first. Waitlist members get early access to the iOS beta in October 2026.</p>
   </div>
 </header>
 
 <section style="padding-top:0;">
   <div class="container">
-    <form class="form-card" action="waitlist.html#" method="post" onsubmit="alert('You\'re on the list. We\'ll reach out before the beta opens.'); return false;">
+    <form class="form-card" name="waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="waitlist-form">
+      <input type="hidden" name="form-name" value="waitlist">
+      <p class="hp-field"><label>Leave this field blank: <input name="bot-field"></label></p>
       <div class="form-group">
         <label for="wl-name">First name</label>
         <input type="text" id="wl-name" name="name" required>
@@ -61,13 +64,39 @@
       <button type="submit" class="btn btn-primary" style="width:100%;">Save My Spot</button>
       <p style="font-size:0.8rem;text-align:center;margin-top:14px;color:var(--fog);">One email when the beta opens. Nothing else.</p>
     </form>
+    <div class="form-success" id="waitlist-success" hidden>You're on the list. We'll reach out before the beta opens.</div>
+    <script>
+    (function () {
+      var form = document.getElementById('waitlist-form');
+      function encode(data) {
+        return Object.keys(data).map(function (k) {
+          return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]);
+        }).join('&');
+      }
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var data = {};
+        new FormData(form).forEach(function (v, k) { data[k] = v; });
+        fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: encode(data)
+        }).then(function () {
+          form.hidden = true;
+          document.getElementById('waitlist-success').hidden = false;
+        }).catch(function () {
+          alert('Something went wrong — please try again, or email support@stringdatingapp.com.');
+        });
+      });
+    })();
+    </script>
   </div>
 </section>
 
 <section class="band-slate">
   <div class="container narrow" style="text-align:center;">
-    <h2 style="color:var(--cream);">iOS beta · Chicago · August 2026</h2>
-    <p style="max-width:520px;margin:18px auto 0;">Matches capped at ten. Expire in fourteen days. Every pair driven toward a confirmed venue. We earn when you walk through the door.</p>
+    <h2 style="color:var(--cream);">iOS beta · Chicago · October 2026</h2>
+    <p style="max-width:520px;margin:18px auto 0;">Matches capped at ten. Expire in fourteen days. Every pair driven toward a confirmed venue. Venues pay for placement — never a cut of your date.</p>
   </div>
 </section>
 
@@ -82,6 +111,7 @@
       <a href='why-string.html'>Why String</a>
       <a href='partners.html'>For Venues</a>
       <a href='waitlist.html'>Waitlist</a>
+      <a href='safety.html'>Safety</a>
       <a href='privacy.html'>Privacy</a>
       <a href='terms.html'>Terms</a>
     </div>

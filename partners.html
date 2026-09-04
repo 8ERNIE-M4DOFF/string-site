@@ -20,6 +20,7 @@
       <a href='how-it-works.html'>How It Works</a>
       <a href='why-string.html'>Why String</a>
       <a class='active' href='partners.html'>For Venues</a>
+      <a href='safety.html'>Safety</a>
       <a class='btn btn-primary btn-small' href='waitlist.html'>Join the Waitlist</a>
     </div>
   </div>
@@ -67,15 +68,37 @@
 <section class="split tall reverse" style="padding:0;">
   <div class="split-text">
     <p class="eyebrow">How it works for you</p>
-    <h2>Simple to join. Built to fill seats.</h2>
-    <ul class="checklist" style="margin-top:8px;">
-      <li><strong>No upfront cost.</strong> Free to join — you offer a small first-round perk, we send the guests.</li>
-      <li><strong>You set the windows.</strong> Choose the days and times you want String dates routed to you.</li>
-      <li><strong>Partner dashboard.</strong> See upcoming bookings and track the dates String brings you each month.</li>
-      <li><strong>You stay in control.</strong> Pause, adjust your windows, or change your perk anytime.</li>
-    </ul>
+    <h2>Free listing. Paid placement. No cut of your bill.</h2>
+    <p style="margin-top:8px;">We charge for placement, not performance. There's no commission on what your table spends, ever — String makes money from venues choosing to be seen, not from your check.</p>
   </div>
   <div class="split-photo" style="background-image:url('https://images.unsplash.com/photo-1613325277138-d89a8f0a081f?q=80&w=2400&auto=format&fit=crop')"></div>
+</section>
+
+<section class="band">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Pricing</p>
+      <h2>Three ways in.</h2>
+    </div>
+    <div class="cards">
+      <div class="card tier-card">
+        <div class="tier-name">Base</div>
+        <div class="tier-price">Free</div>
+        <p>No opt-in required. Your venue appears in date recommendations from our own data — name, address, and type.</p>
+      </div>
+      <div class="card tier-card">
+        <div class="tier-name">Featured</div>
+        <div class="tier-price">$250 <span>/ month</span></div>
+        <p>Your own photos and description. Priority placement in recommendations. Choose which time windows you want filled.</p>
+      </div>
+      <div class="card tier-card">
+        <div class="tier-name">Premium</div>
+        <div class="tier-price">$400 <span>/ month</span></div>
+        <p>Everything in Featured, plus in-house presence — matchbooks, table cards — co-marketing, and a quarterly walkthrough of your numbers with a rep.</p>
+      </div>
+    </div>
+    <p class="tier-note">Every tier keeps the same promise: <strong>you pay for placement, not a percentage.</strong></p>
+  </div>
 </section>
 
 <section id="venue-form">
@@ -85,7 +108,9 @@
       <h2>Become a partner venue</h2>
       <p>We're assembling our founding Chicago venue list now. Tell us about your spot and we'll be in touch.</p>
     </div>
-    <form class="form-card" action="partners.html#" method="post" onsubmit="alert('Thanks — we\'ll be in touch soon.'); return false;">
+    <form class="form-card" name="partner-venue" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="partner-form">
+      <input type="hidden" name="form-name" value="partner-venue">
+      <p class="hp-field"><label>Leave this field blank: <input name="bot-field"></label></p>
       <div class="form-group">
         <label for="venue-name">Venue name</label>
         <input type="text" id="venue-name" name="venue-name" required>
@@ -111,6 +136,32 @@
       </div>
       <button type="submit" class="btn btn-primary" style="width:100%;">Request Partnership Info</button>
     </form>
+    <div class="form-success" id="partner-success" hidden>Thanks — we'll be in touch soon.</div>
+    <script>
+    (function () {
+      var form = document.getElementById('partner-form');
+      function encode(data) {
+        return Object.keys(data).map(function (k) {
+          return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]);
+        }).join('&');
+      }
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var data = {};
+        new FormData(form).forEach(function (v, k) { data[k] = v; });
+        fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: encode(data)
+        }).then(function () {
+          form.hidden = true;
+          document.getElementById('partner-success').hidden = false;
+        }).catch(function () {
+          alert('Something went wrong — please try again, or email support@stringdatingapp.com.');
+        });
+      });
+    })();
+    </script>
   </div>
 </section>
 
@@ -125,6 +176,7 @@
       <a href='why-string.html'>Why String</a>
       <a href='partners.html'>For Venues</a>
       <a href='waitlist.html'>Waitlist</a>
+      <a href='safety.html'>Safety</a>
       <a href='privacy.html'>Privacy</a>
       <a href='terms.html'>Terms</a>
     </div>

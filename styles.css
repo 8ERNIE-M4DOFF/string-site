@@ -309,3 +309,38 @@ footer { background: var(--ink); color: var(--fog); padding: 64px 28px 36px; }
 .legal-body hr {
   border: none; border-top: 1px solid var(--line); margin: 0; display: none;
 }
+
+/* ---------- Safety note ---------- */
+.safety-note {
+  margin-top: 36px; font-size: 0.88rem; color: var(--fog); max-width: 640px;
+  margin-left: auto; margin-right: auto;
+}
+.safety-note a { text-decoration: underline; }
+
+/* ---------- Pricing tiers ---------- */
+.tier-card .tier-name {
+  font-family: 'DM Sans', sans-serif; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; font-size: 0.78rem; color: var(--red); margin-bottom: 12px;
+}
+.tier-card .tier-price {
+  font-family: 'Cormorant Garamond', Georgia, serif; font-size: 2.4rem;
+  color: var(--slate); margin-bottom: 14px; line-height: 1;
+}
+.tier-card .tier-price span {
+  font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--fog);
+  font-weight: 400; letter-spacing: 0;
+}
+.tier-card p { font-size: 0.95rem; }
+.tier-note {
+  text-align: center; max-width: 600px; margin: 40px auto 0;
+  font-size: 1.05rem; color: var(--slate);
+}
+.tier-note strong { color: var(--slate); }
+
+/* ---------- Form success ---------- */
+.form-success {
+  background: var(--cream-pure); border: 1px solid var(--line); border-radius: 8px;
+  padding: 46px 40px; max-width: 520px; margin: 0 auto; text-align: center;
+  font-size: 1.05rem; color: var(--slate);
+}
+.hp-field { position: absolute; left: -9999px; top: -9999px; }
