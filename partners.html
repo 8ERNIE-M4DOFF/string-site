@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Venues — String</title>
-<meta name="description" content="Partner with String. We send confirmed first dates to your tables. Venue partnerships are our entire revenue model — sending you guests is the business.">
+<meta name="description" content="Partner with String. We send confirmed first dates to your venue. Venue partnerships are our entire revenue model: sending you guests is the business.">
 <link rel="icon" type="image/svg+xml" href="string-mark.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -29,8 +29,8 @@
 <header class="hero-photo" style="--photo: url('https://images.unsplash.com/photo-1771532447024-ee348a315f41?q=80&w=2000&auto=format&fit=crop')">
   <div class="container">
     <p class="definition">For Chicago venues</p>
-    <h1>First dates, delivered to <span class="accent">your tables</span>.</h1>
-    <p class="lead">String drives every match toward a confirmed date at a partner venue. Venue partnerships are our entire revenue model — which means sending you guests isn't a side feature, it's the business.</p>
+    <h1>First dates, delivered to <span class="accent">your venue</span>.</h1>
+    <p class="lead">String drives every match toward a confirmed date at a venue. Venue partnerships are our entire revenue model, so sending you guests isn't a side feature. It's the business.</p>
     <div class="hero-cta">
       <a href="partners.html#venue-form" class="btn btn-primary">Become a Partner</a>
     </div>
@@ -47,11 +47,11 @@
     <div class="cards">
       <div class="card">
         <h3>Guests with intent</h3>
-        <p>Matches expire, so there's a reason to lock in a time rather than let it sit. And every date on the calendar is two people who already agreed when they're showing up — not a coupon someone might get around to using.</p>
+        <p>Matches expire, so there's a reason to lock in a time rather than let it sit. Every date on the calendar is two people who already agreed when they're showing up, not a coupon someone might get around to using.</p>
       </div>
       <div class="card">
         <h3>Your slow hours</h3>
-        <p>Set the windows you want filled — weeknight evenings, early seatings — and String routes dates to exactly those times.</p>
+        <p>Set the windows you want filled, like weeknight evenings or early seatings, and String routes dates to exactly those times.</p>
       </div>
       <div class="card">
         <h3>Repeat business</h3>
@@ -59,7 +59,7 @@
       </div>
       <div class="card">
         <h3>Brand presence</h3>
-        <p>Partner venues carry String presence in-house — including matchbooks on the table — placement that lands exactly where your guests already are.</p>
+        <p>Partner venues carry String presence on-site, including matchbook-style cards at checkout or entry. It's placement that lands exactly where your guests already are.</p>
       </div>
     </div>
   </div>
@@ -84,7 +84,7 @@
       <div class="card tier-card">
         <div class="tier-name">Base</div>
         <div class="tier-price">Free</div>
-        <p>No opt-in required. Your venue appears in date recommendations from our own data — name, address, and type.</p>
+        <p>No opt-in required. Your venue appears in date recommendations from our own data: name, address, and type.</p>
       </div>
       <div class="card tier-card">
         <div class="tier-name">Featured</div>
@@ -94,7 +94,7 @@
       <div class="card tier-card">
         <div class="tier-name">Premium</div>
         <div class="tier-price">$400 <span>/ month</span></div>
-        <p>Everything in Featured, plus in-house presence — matchbooks, table cards — co-marketing, and a quarterly walkthrough of your numbers with a rep.</p>
+        <p>Everything in Featured, plus on-site presence (matchbook-style cards, printed signage), co-marketing, and a quarterly walkthrough of your numbers with a rep.</p>
       </div>
     </div>
     <p class="tier-note">Every tier keeps the same promise: <strong>you pay for placement.</strong></p>
@@ -136,7 +136,7 @@
       </div>
       <button type="submit" class="btn btn-primary" style="width:100%;">Request Partnership Info</button>
     </form>
-    <div class="form-success" id="partner-success" hidden>Thanks — we'll be in touch soon.</div>
+    <div class="form-success" id="partner-success" hidden>Thanks. We'll be in touch soon.</div>
     <script>
     (function () {
       var form = document.getElementById('partner-form');
@@ -157,7 +157,7 @@
           form.hidden = true;
           document.getElementById('partner-success').hidden = false;
         }).catch(function () {
-          alert('Something went wrong — please try again, or email support@stringdatingapp.com.');
+          alert('Something went wrong. Please try again, or email support@stringdatingapp.com.');
         });
       });
     })();
