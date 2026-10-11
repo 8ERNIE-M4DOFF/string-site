@@ -1,0 +1,3 @@
+# Safety-contact consent page. The example route must stay before the bare one.
+/safety-contact/example   /safety-contact.html   200
+/safety-contact           /safety-contact.html   200

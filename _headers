@@ -1,0 +1,5 @@
+/safety-contact*
+  Referrer-Policy: no-referrer
+  X-Robots-Tag: noindex
+  Cache-Control: no-store
+  X-Frame-Options: DENY
