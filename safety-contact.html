@@ -149,10 +149,15 @@
     if (r.status === 200 && r.json && r.json.data && r.json.data.firstName) {
       setName(r.json.data.firstName);
       show('state-form');
+    } else if (r.status === 404 && r.json && r.json.error && r.json.error.code === 'INVITE_INVALID') {
+      // Only the API saying so makes a link invalid. A 503 (e.g. the rate
+      // limiter failing closed while Redis is down), a 5xx or anything
+      // unexpected is "couldn't reach String", never "your link is bad".
+      show('state-invalid');
     } else if (r.status === 429) {
       $('loading-text').textContent = 'Too many attempts. Please wait a few minutes and reload this page.';
     } else {
-      show('state-invalid');
+      $('loading-text').textContent = "We couldn't reach String just now. Please reload this page in a minute.";
     }
   }).catch(function () {
     // Could not reach String: a third state, never folded into "invalid".
@@ -183,6 +188,10 @@
         show('state-invalid'); return;
       } else if (r.status === 429) {
         formError('Too many attempts. Please wait a few minutes and try again.');
+      } else if (code === 'SMS_UNDELIVERABLE') {
+        formError("We couldn't text that number, so you haven't been confirmed. Check it's a mobile number and try again.");
+      } else if (code === 'SMS_UNAVAILABLE' || code === 'SMS_FAILED' || r.status >= 500) {
+        formError("We couldn't reach String just now, so you haven't been confirmed. Please try again in a minute.");
       } else {
         formError("Something went wrong on our side and you haven't been confirmed. Please try again.");
       }

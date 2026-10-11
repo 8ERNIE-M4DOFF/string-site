@@ -53,5 +53,27 @@ const TOKEN = 'A'.repeat(43);
   const dom4 = load('https://stringdatingapp.com/safety-contact#' + TOKEN, () => { throw new Error('net'); });
   await tick();
   ok(dom4.d.getElementById('loading-text').textContent.includes("couldn't reach"), 'unreachable is its own state');
+  // 5. Redis down: the rate limiter fails closed with 503. That is NOT an invalid link.
+  let r5 = load('https://stringdatingapp.com/safety-contact#' + TOKEN, () => [503, { error: { code: 'RATE_LIMIT_UNAVAILABLE' } }]);
+  await tick();
+  ok(!vis(r5.d, 'state-invalid') && r5.d.getElementById('loading-text').textContent.includes("couldn't reach String"), 'lookup 503: "couldn\'t reach", not "invalid"');
+  r5 = load('https://stringdatingapp.com/safety-contact#' + TOKEN, () => [500, {}]);
+  await tick();
+  ok(!vis(r5.d, 'state-invalid'), 'lookup 500: not "invalid"');
+  r5 = load('https://stringdatingapp.com/safety-contact#' + TOKEN, () => [404, { error: { code: 'INVITE_INVALID' } }]);
+  await tick();
+  ok(vis(r5.d, 'state-invalid'), 'lookup 404 INVITE_INVALID: invalid');
+  // 6. Confirm-side SMS failures each say the contact was not confirmed.
+  let cr = [503, { error: { code: 'SMS_UNAVAILABLE' } }];
+  const r6 = load('https://stringdatingapp.com/safety-contact#' + TOKEN, (u) => u.endsWith('/lookup') ? [200, { data: { firstName: 'Sam' } }] : cr);
+  await tick();
+  r6.d.getElementById('sc-consent').checked = true; r6.d.getElementById('sc-phone').value = '3125550148';
+  const sub6 = () => r6.d.getElementById('state-form').dispatchEvent(new r6.w.Event('submit', { cancelable: true }));
+  sub6(); await tick();
+  ok(r6.d.getElementById('form-error').textContent.includes("couldn't reach String just now, so you haven't been confirmed") && !vis(r6.d, 'state-done'), 'SMS_UNAVAILABLE: "couldn\'t reach", not confirmed');
+  cr = [422, { error: { code: 'SMS_UNDELIVERABLE' } }]; sub6(); await tick();
+  ok(r6.d.getElementById('form-error').textContent.includes("couldn't text that number"), 'SMS_UNDELIVERABLE message');
+  cr = [503, { error: { code: 'RATE_LIMIT_UNAVAILABLE' } }]; sub6(); await tick();
+  ok(r6.d.getElementById('form-error').textContent.includes("couldn't reach String") && !vis(r6.d, 'state-invalid'), 'confirm 503: "couldn\'t reach", not "invalid"');
   process.exit(fails ? 1 : 0);
 })();
