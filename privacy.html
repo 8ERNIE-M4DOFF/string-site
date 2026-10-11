@@ -135,13 +135,15 @@
   </table>
   <hr />
   <h2>4. Text messages (SMS)</h2>
-  <p>String sends SMS in two situations.</p>
+  <!-- DRAFT — COUNSEL REVIEW. Not published. Changes in §4, §6, §7 and §9 describe the safety-contact consent flow (2026-10-11). -->
+  <p>String sends SMS in three situations.</p>
   <p><strong>Sign-in codes.</strong> When you sign in, we send a one-time passcode to the phone number you provide.</p>
-  <p><strong>Safety alerts.</strong> If you start a check-in timer before a date and do not confirm you are safe before it expires, we send a text message to the emergency contact you chose.</p>
-  <p><strong>Message frequency.</strong> Sign-in codes are sent only when you request one. Safety alerts are sent only when a check-in timer you started expires without confirmation. Neither is recurring, and String does not send marketing or promotional text messages.</p>
+  <p><strong>Safety-contact confirmation.</strong> When someone you listed as your emergency contact agrees, on our website, to receive safety alerts about you, we send them one text confirming it. We never send them an invitation; you send them the link yourself.</p>
+  <p><strong>Safety alerts.</strong> If you start a check-in timer before a date and do not confirm you are safe before it expires, we send a text message to your emergency contact, but only if they have confirmed that they agree to receive these alerts. If they have not confirmed, or have opted out, no one is alerted, and the app tells you so before you start a timer. If you then confirm you are safe after an alert has gone out, we send your contact one follow-up text saying so.</p>
+  <p><strong>Message frequency.</strong> Sign-in codes are sent only when you request one. The safety-contact confirmation is sent once, when your contact agrees. Safety alerts are sent only when a check-in timer you started expires without confirmation, and only to a contact who has agreed to receive them. None of these is recurring, and String does not send marketing or promotional text messages.</p>
   <p><strong>Message and data rates may apply.</strong></p>
   <p><strong>We do not sell, rent, or share mobile phone numbers with third parties for marketing purposes.</strong> Phone numbers are shared only with the service providers listed in Section 7 who deliver messages on our behalf, and only for that purpose.</p>
-  <p>To stop receiving safety alerts, remove your emergency contact in the app's safety settings. You may also reply STOP to any message from us. Replying STOP will prevent us from sending you further messages, including safety alerts.</p>
+  <p>If you are someone's emergency contact, reply STOP to any message from us to stop receiving safety alerts. Replying STOP stops all further messages from us to that number, including safety alerts for anyone else who has listed you, and we let the person who listed you know that you opted out. Reply HELP for help. To receive alerts again after replying STOP, you need a new link from the person who listed you. A String user can also stop alerts to their contact by removing the contact in the app's safety settings.</p>
   <hr />
   <h2>5. Who we share information with</h2>
   <p>We do not sell your personal information.</p>
@@ -216,23 +218,26 @@
   <p><strong>Other users</strong> see your profile: your first name, age, photos, and the written parts of your profile. They see your city, never your exact location or how far away you are.</p>
   <hr />
   <h2>6. Your emergency contact — someone else's information</h2>
-  <p>When you add an emergency contact, you give us the name and phone number of a person who is not a String user and has not agreed to anything with us.</p>
+  <p>When you add an emergency contact, you give us the name and phone number of a person who is not a String user. We do not message them until they agree.</p>
   <p>We take that seriously. Specifically:</p>
   <ul>
   <li>We store only the name and number you enter. We do not look them up, enrich the record, or contact them for any other reason.</li>
-  <li>We message them <strong>only</strong> if a check-in timer you started expires without your confirmation.</li>
+  <li><strong>We never text them first.</strong> The app gives you a link, and you send it to them yourself. The page behind the link shows them only your first name. It asks them to enter their number, which must match the one you entered, and to tick a box agreeing to receive safety alerts.</li>
+  <li>When they agree, we record when they agreed, the wording they agreed to, and the IP address and browser they used, as evidence of their consent. Then we send them one text confirming it.</li>
+  <li>After that, we message them <strong>only</strong> if a check-in timer you started expires without your confirmation, plus one follow-up if you then confirm you are safe.</li>
   <li>The message tells them your first name, that a check-in you set has expired, and asks them to check on you. It may include a link showing your last shared location.</li>
   <li>We never use their number for marketing, and we never share it with anyone except the provider that delivers the message.</li>
-  <li>You can remove them at any time in the app's safety settings, which deletes their information.</li>
+  <li>They can reply STOP at any time. We will stop messaging them and tell you that they opted out.</li>
+  <li>You can remove them at any time in the app's safety settings. This deletes their name and phone number. We keep a consent record: a one-way cryptographic hash of their number, when they agreed, the wording they agreed to, and when they opted out, if they did. We keep this record so that we can show, if asked, that we only ever texted people who agreed. The hash cannot be reversed to recover the number by ordinary means, but it is derived from it.</li>
   </ul>
-  <p><strong>Please tell the person you have listed them.</strong> They will not otherwise know until they receive a message.</p>
+  <p><strong>Talk to the person before you send them the link.</strong> They will only ever hear from us if they agree.</p>
   <hr />
   <h2>7. How long we keep things</h2>
   <ul>
   <li><strong>Account data</strong>: while your account exists.</li>
   <li><strong>Precise location history</strong>: deleted 30 days after it is created.</li>
   <li><strong>Messages and matches</strong>: while your account exists, or until the match ends.</li>
-  <li><strong>Emergency contact</strong>: until you remove it or delete your account.</li>
+  <li><strong>Emergency contact</strong>: name and phone number until you remove the contact or delete your account. The consent record described in Section 6 (a hash of the number, when they agreed, the wording, and any opt-out) is kept after that, for as long as we need to be able to show that consent.</li>
   <li><strong>Reports and safety records</strong>: retained after account deletion where necessary to keep other users safe. See Section 9.</li>
   </ul>
   <hr />
@@ -248,11 +253,12 @@
   <p>If you are a California resident, you have additional rights under the CCPA, including the right to know what we collect, to request deletion, and not to be discriminated against for exercising those rights. We do not sell personal information as that term is defined by the CCPA.</p>
   <hr />
   <h2>9. What survives account deletion</h2>
-  <p>Deleting your account removes your profile, photos, messages, matches, and emergency contact.</p>
-  <p>Two things do not go away:</p>
+  <p>Deleting your account removes your profile, photos, messages, matches, and your emergency contact's name and phone number.</p>
+  <p>Three things do not go away:</p>
   <p><strong>Safety reports filed about you by other people.</strong> These are the other person's account of their own experience, and we keep them so that a record of a safety concern cannot be erased by the person it concerns.</p>
   <p><strong>A record that an account was banned.</strong> If your account was banned for a safety reason, we retain a one-way cryptographic hash of the phone number so that the ban cannot be trivially undone by deleting and re-registering. This hash cannot be reversed to recover your number by ordinary means, but we want to be clear that it is derived from it. We retain it only for accounts banned for safety reasons.</p>
-  <p>If you believe either applies to you in error, contact support@stringdatingapp.com.</p>
+  <p><strong>The consent record for your emergency contact.</strong> This is the hash, consent time, wording and any opt-out described in Section 6. It is the record that your contact agreed to receive texts from us, and it is about them, not you.</p>
+  <p>If you believe any of these applies to you in error, contact support@stringdatingapp.com.</p>
   <hr />
   <h2>10. Security</h2>
   <p>We use encryption in transit, store credentials with a managed authentication provider, and restrict internal access to production data. No system is perfectly secure, and we will not claim otherwise.</p>
