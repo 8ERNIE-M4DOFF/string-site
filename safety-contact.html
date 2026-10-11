@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<title>Safety contact — String</title>
+<meta name="description" content="Confirm that you agree to receive String safety alerts for someone who listed you as their safety contact.">
+<link rel="icon" type="image/svg+xml" href="/string-mark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+<style>
+  /* Page-local. Mobile-first: this page is opened from a text message. */
+  .sc { padding: 32px 16px 56px; }
+  .sc .form-card { padding: 28px 20px; }
+  @media (min-width: 560px) { .sc { padding-top: 56px; } .sc .form-card { padding: 40px 36px; } }
+  .sc h1 { font-family: 'Newsreader', serif; font-weight: 500; font-size: 1.7rem; line-height: 1.2; color: var(--slate); margin-bottom: 12px; }
+  .sc p { margin-bottom: 14px; }
+  .sc .example-note { font-size: 0.85rem; background: var(--bg-alt); border: 1px solid var(--line); border-radius: 4px; padding: 10px 12px; margin-bottom: 18px; color: #56616e; }
+  .sc .consent { display: flex; gap: 12px; align-items: flex-start; margin: 4px 0 20px; text-align: left; }
+  .sc .consent input { width: 20px; height: 20px; flex: 0 0 20px; margin-top: 3px; accent-color: var(--red); }
+  .sc .consent label { font-size: 0.92rem; line-height: 1.5; color: var(--ink); }
+  .sc .consent a { color: var(--slate); text-decoration: underline; }
+  .sc .msg { font-size: 0.92rem; border-radius: 4px; padding: 12px 14px; margin-bottom: 16px; }
+  .sc .msg-error { background: #fbeaea; color: #8a2424; }
+  .sc .msg-ok { background: #eaf4ec; color: #1f5a2c; }
+  .sc button[disabled] { opacity: 0.5; cursor: not-allowed; }
+  .sc .hidden { display: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class='logo' href='/'><img src="/string-mark.svg" alt=""> string</a>
+  </div>
+</nav>
+
+<section class="sc">
+  <div class="container">
+
+    <!-- Shown while the link is being checked, and if it cannot be. -->
+    <div class="form-card" id="state-loading">
+      <p id="loading-text">Checking your link…</p>
+    </div>
+
+    <div class="form-card hidden" id="state-invalid">
+      <h1>This link isn't valid</h1>
+      <p>It may have expired, already been used, or been replaced by a newer one. Ask the person who sent it to send you a new link from the String app.</p>
+    </div>
+
+    <div class="form-card hidden" id="state-done">
+      <h1>You're confirmed</h1>
+      <p>We've sent you one text to confirm. You'll hear from String again only if <span class="first-name"></span>'s safety check-in expires without them confirming they're safe.</p>
+      <p>Reply STOP to any message from String to opt out.</p>
+    </div>
+
+    <!-- The consent form. /safety-contact/example renders this exact form. -->
+    <form class="form-card hidden" id="state-form" novalidate>
+      <p class="example-note hidden" id="example-note">Example page. This is the form a safety contact sees when they open the link someone sent them. The name is a placeholder and the form can't be submitted.</p>
+
+      <h1><span class="first-name"></span> wants you as their safety contact</h1>
+      <p><span class="first-name"></span> uses String, a dating app, and can start a safety check-in before a date. If they don't confirm they're safe before the timer runs out, String can text you so you can check on them.</p>
+      <p>String will never text you unless you agree below.</p>
+
+      <div class="msg msg-error hidden" id="form-error" role="alert"></div>
+
+      <div class="form-group">
+        <label for="sc-phone">Your mobile number</label>
+        <input type="tel" id="sc-phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="(312) 555-0148" required>
+      </div>
+
+      <div class="consent">
+        <input type="checkbox" id="sc-consent" name="consent">
+        <label for="sc-consent">I agree to receive text message safety alerts from String if <span class="first-name"></span> starts a safety check-in and does not confirm they are safe. Message frequency varies, and alerts are sent only if a check-in expires. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. <a href="/terms" target="_blank" rel="noreferrer">Terms</a> · <a href="/privacy" target="_blank" rel="noreferrer">Privacy Policy</a></label>
+      </div>
+
+      <button type="submit" class="btn btn-primary" id="sc-submit" style="width:100%;">Confirm</button>
+    </form>
+
+  </div>
+</section>
+
+<script>
+(function () {
+  // The consent text above is version 1. The API keeps the canonical text for
+  // every version and refuses any version it doesn't know. Changing a word of
+  // the checkbox label means a new version on BOTH sides.
+  var CONSENT_TEXT_VERSION = 'v1';
+  var API = 'https://string-api-pt0c.onrender.com';
+  var EXAMPLE_NAME = 'Alex';
+
+  var $ = function (id) { return document.getElementById(id); };
+  function show(id) {
+    ['state-loading', 'state-invalid', 'state-done', 'state-form'].forEach(function (s) {
+      $(s).classList.toggle('hidden', s !== id);
+    });
+  }
+  function setName(name) {
+    // textContent, never innerHTML: the name is user-supplied.
+    Array.prototype.forEach.call(document.querySelectorAll('.first-name'), function (el) { el.textContent = name; });
+  }
+  function formError(text) {
+    var el = $('form-error');
+    el.textContent = text || '';
+    el.classList.toggle('hidden', !text);
+  }
+
+  // US numbers only in V1 (no country picker anywhere in String yet).
+  function toE164(raw) {
+    var d = String(raw || '').replace(/\D/g, '');
+    if (d.length === 11 && d.charAt(0) === '1') d = d.slice(1);
+    return d.length === 10 ? '+1' + d : null;
+  }
+
+  // ── Reviewer example: same form, placeholder name, submit disabled, no token, no API call.
+  var path = location.pathname.replace(/\/+$/, '');
+  if (path === '/safety-contact/example') {
+    setName(EXAMPLE_NAME);
+    $('example-note').classList.remove('hidden');
+    $('sc-submit').disabled = true;
+    $('state-form').addEventListener('submit', function (e) { e.preventDefault(); });
+    show('state-form');
+    return;
+  }
+
+  // ── Real invite: the token is in the fragment, which browsers never send to
+  // any server. Read it once, then drop it from the address bar and history.
+  var token = location.hash.replace(/^#/, '');
+  if (location.hash) history.replaceState(null, '', location.pathname);
+  if (!/^[A-Za-z0-9_-]{43,}$/.test(token)) { show('state-invalid'); return; }
+
+  function post(route, body) {
+    return fetch(API + route, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+      referrerPolicy: 'no-referrer',
+      credentials: 'omit'
+    }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (json) { return { status: res.status, json: json }; });
+    });
+  }
+
+  post('/safety-contact/lookup', { token: token }).then(function (r) {
+    if (r.status === 200 && r.json && r.json.data && r.json.data.firstName) {
+      setName(r.json.data.firstName);
+      show('state-form');
+    } else if (r.status === 429) {
+      $('loading-text').textContent = 'Too many attempts. Please wait a few minutes and reload this page.';
+    } else {
+      show('state-invalid');
+    }
+  }).catch(function () {
+    // Could not reach String: a third state, never folded into "invalid".
+    $('loading-text').textContent = "We couldn't reach String. Check your connection and reload this page.";
+  });
+
+  $('state-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    formError('');
+    if (!$('sc-consent').checked) { formError('Please tick the box to agree to safety alerts.'); return; }
+    var phone = toE164($('sc-phone').value);
+    if (!phone) { formError('Enter a 10-digit US mobile number.'); return; }
+
+    var btn = $('sc-submit');
+    btn.disabled = true;
+    btn.textContent = 'Confirming…';
+    post('/safety-contact/confirm', {
+      token: token, phone: phone, consent: true, consentTextVersion: CONSENT_TEXT_VERSION
+    }).then(function (r) {
+      var code = r.json && r.json.error && r.json.error.code;
+      if (r.status === 200) { show('state-done'); return; }
+      if (code === 'PHONE_MISMATCH') {
+        formError("That number doesn't match the one you were invited with. Check it and try again.");
+      } else if (code === 'SMS_OPTED_OUT') {
+        var from = r.json.error.sendFrom ? ' to ' + r.json.error.sendFrom : '';
+        formError('This number previously replied STOP to String. Text START' + from + ', then press Confirm again.');
+      } else if (code === 'INVITE_INVALID') {
+        show('state-invalid'); return;
+      } else if (r.status === 429) {
+        formError('Too many attempts. Please wait a few minutes and try again.');
+      } else {
+        formError("Something went wrong on our side and you haven't been confirmed. Please try again.");
+      }
+      btn.disabled = false;
+      btn.textContent = 'Confirm';
+    }).catch(function () {
+      formError("We couldn't reach String, so you haven't been confirmed. Check your connection and try again.");
+      btn.disabled = false;
+      btn.textContent = 'Confirm';
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
